@@ -10,6 +10,14 @@ const knex = require('knex')({
 
 const db = require('knex')({ client: 'pg' }); 
 
+const addAllTodos = (todos => { 
+  knex('todo').insert(todos) 
+    .then(() => console.log('data inserted'))
+  // todos.forEach(todo => {
+  //   knex.('todo').insert()
+  // });
+});
+
 const getAllTodos = callback => { 
   knex.raw('select * from todo').then((err, todos) => { 
     if (err) { 
@@ -21,4 +29,4 @@ const getAllTodos = callback => {
   }); 
 }
 
-module.exports = knex; 
+module.exports = {addAllTodos, getAllTodos}; 
