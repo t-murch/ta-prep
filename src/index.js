@@ -13,24 +13,30 @@ class App extends React.Component {
   
   componentDidMount() { 
     axios.get('/api') 
+      .then(() => axios.get('/api/todos')) 
       .then(data => { 
-        console.log(data.data)
+        console.log(data.data, 'todos from db');
         this.setState({ 
           todos: data.data
-        }); 
+        }) 
       })
-      .catch(err => console.log(err)
-    )
+      .catch(err => console.log(err)); 
   } 
   
   
   render() { 
-
+    const {todos} = this.state; 
     return ( 
       <>
         <h1>What do you have to-do?</h1> 
-        <ul className='list'>
-          {this.state.todos.filter(todo => (todo.completed === false)) 
+        <ul className='listIncomplete'>
+          {todos.filter(todo => (todo.completed === false)) 
+            .map(todo => <EachTodo todo={todo} /> 
+          )}
+        </ul> 
+        <h1>Completed tasks!</h1> 
+        <ul className='listCompleted'> 
+          {todos.filter(todo => (todo.completed === true))
             .map(todo => <EachTodo todo={todo} /> 
           )}
         </ul>

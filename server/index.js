@@ -22,6 +22,24 @@ app.get("/api", (req, res) => {
 });
 
 
+app.get('/api/todos', (req, res) => { 
+  // db.getAllTodos((err, data) => { 
+  //   console.log(data);
+  //   if (err) { 
+  //     console.log(err, null)
+  //     res.status(400).end();
+  //   } 
+  //   console.log(`got the todos`)
+  //   res.send(null, data);
+  // }) 
+  db.getAllTodos()
+    .then(results => { 
+      // console.log(data.data);
+      res.send(results)
+    }) 
+    .catch(err => console.log(err, `err at /api/todos`))
+});
+
 // app.get("/api", (req, res) => { 
 //   request("https://jsonplaceholder.typicode.com/todos", (error, response, body) => { 
 //     if (error) { 
